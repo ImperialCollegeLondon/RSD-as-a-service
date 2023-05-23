@@ -48,6 +48,9 @@ This repo contains the new RSD-as-a-service implementation. The service can be f
 
 ### Running the services
 
+
+
+
 ```
 # Start the containers via the make file
 make start
