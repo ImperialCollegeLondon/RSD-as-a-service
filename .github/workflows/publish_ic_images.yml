@@ -15,15 +15,39 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get image metadata
-        id: meta
-        uses: docker/metadata-action@v3
+      - name: Get frontend image metadata
+        id: frontend-meta
+        uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository }}
           tags: type=raw,value=frontend-latest
-      - name: Build and push Docker image
+      - name: Build and push frontend Docker image
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.frontend-meta.outputs.tags }}
+      - name: Get database image metadata
+        id: database-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: type=raw,value=database-latest
+      - name: Build and push database Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./database
+          push: true
+          tags: ${{ steps.database-meta.outputs.tags }}
+      - name: Get authentication image metadata
+        id: authentication-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: type=raw,value=authentication-latest
+      - name: Build and push authentication Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./authentication
+          push: true
+          tags: ${{ steps.authentication-meta.outputs.tags }}
