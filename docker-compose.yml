@@ -17,8 +17,8 @@ services:
     build: ./database
     image: rsd/database:2.0.2
     ports:
-    # enable connection from outside (development mode)
-     - "5432:5432"
+      # enable connection from outside (development mode)
+      - "5432:5432"
     environment:
       # it uses values from .env file
       - POSTGRES_DB
@@ -91,7 +91,8 @@ services:
       [
         "java",
         "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n",
-        "-cp", "auth.jar",
+        "-cp",
+        "auth.jar",
         "nl.esciencecenter.rsd.authentication.Main"
       ]
 
@@ -130,10 +131,10 @@ services:
       - database
       - backend
       - auth
-    # volumes:
-    #   - ./deployment/hmz/styles:/app/public/styles
-    #   - ./deployment/hmz/data:/app/public/data
-    #   - ./deployment/hmz/images:/app/public/images
+    volumes:
+      #   - ./deployment/hmz/styles:/app/public/styles
+      - ./deployment/imperial/data:/app/public/data
+      - ./deployment/imperial/images:/app/public/images
     networks:
       - net
 
@@ -254,8 +255,8 @@ services:
 networks:
   net:
 
-# named volumes can be managed easier using docker compose
-# volume should have name rsd-as-a-service_pgdb
+    # named volumes can be managed easier using docker compose
+    # volume should have name rsd-as-a-service_pgdb
 volumes:
   pgdb:
   lets-encrypt:
