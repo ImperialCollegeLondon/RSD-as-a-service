@@ -1,11 +1,15 @@
 import KeywordBox from './KeywordBox'
 
 type KeywordsProps = {
-    keywords: object
+    keywords: Array<KeywordsObject>
+}
+
+type KeywordsObject = {
+    value: string
 }
 
 export default function Keywords({keywords}: KeywordsProps) {
-    const keywordButtons = keywords.map((keyword: object, index: number) => {
+    const keywordButtons = keywords.map((keyword: KeywordsObject, index: number) => {
         return <KeywordBox key={index} label={keyword.value} />
     })
     return (
