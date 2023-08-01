@@ -6,17 +6,17 @@
 import Image from 'next/legacy/image'
 import Link from 'next/link'
 
-import { HomeProps } from 'pages'
+import {HomeProps} from 'pages'
 import CounterBox from './CounterBox'
 import Keywords from './Keywords'
-import { useSession } from '~/auth'
+import {useSession} from '~/auth'
 import useImperialData from './useImperialData'
 import ContentLoader from '~/components/layout/ContentLoader'
 import MainContent from '~/components/layout/MainContent'
 
-export default function MainContentImperialCollege({ counts }: HomeProps) {
-  const { token } = useSession()
-  const { loading, keywords } = useImperialData(token)
+export default function MainContentImperialCollege({counts}: HomeProps) {
+  const {token} = useSession()
+  const {loading, keywords} = useImperialData(token)
 
   return (
     <MainContent>
@@ -70,7 +70,7 @@ export default function MainContentImperialCollege({ counts }: HomeProps) {
           <ContentLoader />
           :
           <div className="mb-12">
-            <Keywords keywords={JSON.stringify(keywords, null, ' ')} />
+            <Keywords keywords={keywords} />
           </div>
       }
 
