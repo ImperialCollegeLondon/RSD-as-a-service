@@ -8,6 +8,7 @@ import Link from 'next/link'
 
 import {HomeProps} from 'pages'
 import CounterBox from './CounterBox'
+import Keywords from './Keywords'
 import {useSession} from '~/auth'
 import useImperialData from './useImperialData'
 import ContentLoader from '~/components/layout/ContentLoader'
@@ -67,11 +68,9 @@ export default function MainContentImperialCollege({counts}: HomeProps) {
       {
         loading ?
           <ContentLoader />
-        :
+          :
           <div className="mb-12">
-            <pre>
-              {JSON.stringify(keywords,null,' ')}
-            </pre>
+            <Keywords keywords={keywords} />
           </div>
       }
 
