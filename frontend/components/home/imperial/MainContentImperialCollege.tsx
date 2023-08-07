@@ -11,12 +11,18 @@ import CounterBox from './CounterBox'
 import Keywords from './Keywords'
 import {useSession} from '~/auth'
 import useImperialData from './useImperialData'
+import useLoginProviders from '~/auth/api/useLoginProviders'
 import ContentLoader from '~/components/layout/ContentLoader'
 import MainContent from '~/components/layout/MainContent'
+
+function set_location_cookie() {
+  document.cookie = `rsd_pathname=/software/add;path=/auth;SameSite=None;Secure`
+}
 
 export default function MainContentImperialCollege({counts}: HomeProps) {
   const {token} = useSession()
   const {loading, keywords} = useImperialData(token)
+  const providers = useLoginProviders()
 
   return (
     <MainContent>
@@ -42,7 +48,7 @@ export default function MainContentImperialCollege({counts}: HomeProps) {
             </Link>
           </div>
           <div className="bg-secondary text-primary-content p-4 text-center max-w-fit mx-auto rounded-full border-4 border-primary mt-8">
-            <Link href="/software/add">
+      <Link href={providers[0]?.redirectUrl ?? ''} onClick={set_location_cookie}>
               <div className="text-4xl">Submit Software</div>
             </Link>
           </div>
