@@ -51,3 +51,39 @@ jobs:
           context: ./authentication
           push: true
           tags: ${{ steps.authentication-meta.outputs.tags }}
+      - name: Get backend image metadata
+        id: backend-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: type=raw,value=backend-latest
+      - name: Build and push backend Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend-postgrest
+          push: true
+          tags: ${{ steps.backend-meta.outputs.tags }}
+      - name: Get scrapers image metadata
+        id: scrapers-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: type=raw,value=scrapers-latest
+      - name: Build and push scrapers Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./scrapers
+          push: true
+          tags: ${{ steps.scrapers-meta.outputs.tags }}
+      - name: Get nginx image metadata
+        id: nginx-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: type=raw,value=nginx-latest
+      - name: Build and push nginx Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./nginx
+          push: true
+          tags: ${{ steps.nginx-meta.outputs.tags }}
