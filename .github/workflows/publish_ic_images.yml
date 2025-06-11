@@ -15,6 +15,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Get frontend image metadata
         id: frontend-meta
         uses: docker/metadata-action@v4
@@ -27,6 +28,7 @@ jobs:
           context: ./frontend
           push: true
           tags: ${{ steps.frontend-meta.outputs.tags }}
+
       - name: Get database image metadata
         id: database-meta
         uses: docker/metadata-action@v4
@@ -39,6 +41,7 @@ jobs:
           context: ./database
           push: true
           tags: ${{ steps.database-meta.outputs.tags }}
+
       - name: Get authentication image metadata
         id: authentication-meta
         uses: docker/metadata-action@v4
@@ -51,6 +54,7 @@ jobs:
           context: ./authentication
           push: true
           tags: ${{ steps.authentication-meta.outputs.tags }}
+
       - name: Get backend image metadata
         id: backend-meta
         uses: docker/metadata-action@v4
@@ -63,6 +67,7 @@ jobs:
           context: ./backend-postgrest
           push: true
           tags: ${{ steps.backend-meta.outputs.tags }}
+
       - name: Get scrapers image metadata
         id: scrapers-meta
         uses: docker/metadata-action@v4
@@ -75,6 +80,7 @@ jobs:
           context: ./scrapers
           push: true
           tags: ${{ steps.scrapers-meta.outputs.tags }}
+
       - name: Get nginx image metadata
         id: nginx-meta
         uses: docker/metadata-action@v4
@@ -87,3 +93,29 @@ jobs:
           context: ./nginx
           push: true
           tags: ${{ steps.nginx-meta.outputs.tags }}
+
+      - name: Get background services image metadata
+        id: background-services-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: type=raw,value=background-services-latest
+      - name: Build and push background-services Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./background-services
+          push: true
+          tags: ${{ steps.background-services-meta.outputs.tags }}
+
+      - name: Get codemeta image metadata
+        id: codemeta-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: type=raw,value=codemeta-latest
+      - name: Build and push codemeta Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./codemeta
+          push: true
+          tags: ${{ steps.codemeta-meta.outputs.tags }}
